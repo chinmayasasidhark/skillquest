@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 2%;
+    --foreground: 233 100% 97%;
+    --card: 235 30% 9%;
+    --card-foreground: 233 100% 97%;
+    --popover: 235 30% 9%;
+    --popover-foreground: 233 100% 97%;
+    --primary: 155 100% 50%;
+    --primary-foreground: 240 10% 2%;
+    --secondary: 245 100% 72%;
+    --secondary-foreground: 240 10% 2%;
+    --muted: 237 18% 35%;
+    --muted-foreground: 237 14% 55%;
+    --accent: 305 100% 65%;
+    --accent-foreground: 240 10% 2%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 0 0% 100% / 0.06;
+    --input: 0 0% 100% / 0.06;
+    --ring: 155 100% 50%;
+    --radius: 0.5rem;
+
+    --bg-page: #050507;
+    --bg-sidebar: #070810;
+    --bg-card-start: #0F1120;
+    --bg-card-end: #0C0D18;
+
+    --sidebar-background: 235 30% 3%;
+    --sidebar-foreground: 233 100% 97%;
+    --sidebar-primary: 155 100% 50%;
+    --sidebar-primary-foreground: 240 10% 2%;
+    --sidebar-accent: 155 100% 50% / 0.08;
+    --sidebar-accent-foreground: 155 100% 50%;
+    --sidebar-border: 0 0% 100% / 0.04;
+    --sidebar-ring: 155 100% 50%;
+  }
+
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 235 20% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 235 20% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 235 20% 13%;
+    --primary: 155 85% 38%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 245 80% 62%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 230 12% 82%;
+    --muted-foreground: 230 10% 45%;
+    --accent: 305 80% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 230 15% 90%;
+    --input: 230 15% 90%;
+    --ring: 155 85% 38%;
+
+    --bg-page: #F5F6FA;
+    --bg-sidebar: #FFFFFF;
+    --bg-card-start: #FFFFFF;
+    --bg-card-end: #F8F9FC;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 235 20% 13%;
+    --sidebar-primary: 155 85% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 155 85% 38% / 0.1;
+    --sidebar-accent-foreground: 155 85% 38%;
+    --sidebar-border: 230 15% 92%;
+    --sidebar-ring: 155 85% 38%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    background-color: var(--bg-page);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+  .light ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+  .text-gradient-hero {
+    background: linear-gradient(135deg, #00FFA3 0%, #7B6EF6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-gradient-hero {
+    background: linear-gradient(135deg, #00FFA3 0%, #7B6EF6 50%, #FF6EEB 100%);
+  }
+  .bg-gradient-card-shine {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+  }
+
+  /* Card top shine line */
+  .card-shine {
+    position: relative;
+  }
+  .card-shine::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .light .card-shine::before {
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 24px rgba(0,255,163,0.25);
+  }
+  .glow-violet {
+    box-shadow: 0 0 24px rgba(123,110,246,0.25);
+  }
+  .glow-gold {
+    box-shadow: 0 0 24px rgba(255,209,102,0.3);
+  }
+  .shadow-card {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .light .shadow-card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .glass-card {
+    background: rgba(16,18,28,0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+  }
+  .light .glass-card {
+    background: rgba(255,255,255,0.85);
+    border-color: rgba(0,0,0,0.08);
+  }
+
+  /* XP bar shimmer */
+  .xp-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .xp-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: xp-shimmer 2s infinite linear;
+  }
+  @keyframes xp-shimmer {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(350%); }
+  }
+
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    animation: shimmer-slide 2.5s infinite;
+  }
+  @keyframes shimmer-slide {
+    100% { left: 100%; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(0,255,163,0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(0,255,163,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,255,163,0); }
+  }
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  .animate-pulse-ring {
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+}
