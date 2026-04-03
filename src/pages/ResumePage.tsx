@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function ResumePage() {
@@ -6,69 +7,86 @@ export default function ResumePage() {
   const [resume, setResume] = useState("");
 
   const generateResume = () => {
-    const skillList = skills.split(",").map((s) => s.trim());
+    if (!name || !skills) return;
 
-    const text = `
-${name}
+    const output = `
+Name: ${name}
 
-Skills:
-${skillList.join(", ")}
+Skills: ${skills}
+
+Summary:
+Passionate developer skilled in ${skills}, focused on building scalable and impactful applications.
 
 Projects:
-- Built real-world applications using ${skillList[0] || "modern technologies"}
-- Developed projects with ${skillList.slice(0, 2).join(", ")}
+- Built modern web apps using ${skills}
+- Focused on performance and UI/UX
 
-Experience:
-- Strong understanding of ${skillList.join(", ")}
-- Hands-on experience through projects
+Goal:
+To become a top-tier developer and contribute to innovative tech solutions.
+    `;
 
-Objective:
-Motivated developer seeking internship opportunities to apply and enhance skills.
-`;
-
-    setResume(text);
+    setResume(output);
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
+    <div className="text-white flex flex-col items-center">
 
-      <h1 className="text-4xl font-bold mb-10">
+      {/* TITLE */}
+      <motion.h1
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-4xl font-bold mb-6 bg-gradient-to-r from-[#00FFA3] to-[#7B6EF6] bg-clip-text text-transparent"
+      >
         📄 Resume Builder
-      </h1>
+      </motion.h1>
 
-      {/* INPUTS */}
-      <div className="flex flex-col gap-4 max-w-md">
+      {/* FORM CARD */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-xl p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(0,255,163,0.1)] space-y-4"
+      >
 
         <input
-          placeholder="Name"
+          placeholder="Your Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="p-3 bg-white/10 rounded border border-white/20 outline-none"
+          className="w-full p-3 rounded-lg bg-white/10 border border-white/10 focus:ring-2 focus:ring-[#00FFA3]"
         />
 
         <input
-          placeholder="Skills (react, node, dsa)"
+          placeholder="Skills (React, Node, DSA...)"
           value={skills}
           onChange={(e) => setSkills(e.target.value)}
-          className="p-3 bg-white/10 rounded border border-white/20 outline-none"
+          className="w-full p-3 rounded-lg bg-white/10 border border-white/10 focus:ring-2 focus:ring-[#7B6EF6]"
         />
 
-        <button
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={generateResume}
-          className="bg-yellow-400 text-black px-6 py-2 rounded font-bold hover:scale-105 transition"
+          className="w-full py-3 rounded-lg font-semibold bg-gradient-to-r from-[#00FFA3] to-[#7B6EF6] text-black"
         >
-          Generate Resume
-        </button>
+          Generate Resume ⚡
+        </motion.button>
+      </motion.div>
 
-      </div>
-
-      {/* OUTPUT */}
+      {/* RESULT */}
       {resume && (
-        <div className="mt-10 max-w-2xl bg-white/5 p-6 rounded-xl whitespace-pre-line border border-white/10">
-          {resume}
-        </div>
-      )}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-xl mt-6 p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(123,110,246,0.1)]"
+        >
+          <h3 className="text-lg font-semibold mb-3 text-[#00FFA3]">
+            🚀 Generated Resume
+          </h3>
 
+          <pre className="whitespace-pre-wrap text-sm opacity-80">
+            {resume}
+          </pre>
+        </motion.div>
+      )}
     </div>
   );
 }

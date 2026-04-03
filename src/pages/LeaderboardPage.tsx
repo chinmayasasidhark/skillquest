@@ -1,73 +1,44 @@
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
+const users = [
+  { name: "You", xp: 1280 },
+  { name: "Alex", xp: 1100 },
+  { name: "Riya", xp: 980 },
+  { name: "Karthik", xp: 850 },
+];
 
 export default function LeaderboardPage() {
-  const [users, setUsers] = useState<any[]>([]);
-
-  useEffect(() => {
-    setUsers([
-      { rank: 1, name: "Chinmaya", xp: 500 },
-      { rank: 2, name: "Rishikesh", xp: 400 },
-      { rank: 3, name: "User3", xp: 300 },
-      { rank: 4, name: "User4", xp: 250 },
-    ]);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white p-8">
-      
-      {/* TITLE */}
-      <h1 className="text-4xl font-bold text-center mb-12">
+    <div className="text-white">
+      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-[#00FFA3] to-[#7B6EF6] bg-clip-text text-transparent">
         🏆 Leaderboard
       </h1>
 
-      {/* TOP 3 SECTION */}
-      <div className="flex justify-center items-end gap-6 mb-12">
-
-        {/* #2 */}
-        {users[1] && (
-          <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl w-48 text-center shadow-lg hover:scale-105 transition">
-            <h2 className="text-xl">🥈 #{users[1].rank}</h2>
-            <p className="mt-2">{users[1].name}</p>
-            <p className="font-bold">{users[1].xp} XP</p>
-          </div>
-        )}
-
-        {/* #1 */}
-        {users[0] && (
-          <div className="bg-yellow-400 text-black p-8 rounded-2xl w-60 text-center shadow-2xl scale-110">
-            <h2 className="text-2xl font-bold">🥇 #{users[0].rank}</h2>
-            <p className="mt-2 text-lg">{users[0].name}</p>
-            <p className="font-bold text-lg">{users[0].xp} XP</p>
-          </div>
-        )}
-
-        {/* #3 */}
-        {users[2] && (
-          <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl w-48 text-center shadow-lg hover:scale-105 transition">
-            <h2 className="text-xl">🥉 #{users[2].rank}</h2>
-            <p className="mt-2">{users[2].name}</p>
-            <p className="font-bold">{users[2].xp} XP</p>
-          </div>
-        )}
-      </div>
-
-      {/* REST USERS */}
-      <div className="max-w-2xl mx-auto space-y-3">
-        {users.slice(3).map((user) => (
-          <div
-            key={user.rank}
-            className="flex justify-between items-center bg-white/5 p-4 rounded-xl hover:bg-white/10 transition"
+      <div className="space-y-4">
+        {users.map((u, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.05 }}
+            className="p-5 rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(0,255,163,0.1)] flex justify-between"
           >
-            <span className="font-medium">
-              #{user.rank} {user.name}
-            </span>
-            <span className="font-bold text-green-400">
-              {user.xp} XP
-            </span>
-          </div>
+            <div className="flex gap-4 items-center">
+              <span className="text-xl font-bold text-[#00FFA3]">
+                #{i + 1}
+              </span>
+              <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                {u.name[0]}
+              </div>
+              <p>{u.name}</p>
+            </div>
+
+            <div>
+              <p className="font-bold">{u.xp} XP</p>
+            </div>
+          </motion.div>
         ))}
       </div>
-
     </div>
   );
 }

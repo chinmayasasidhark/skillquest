@@ -1,132 +1,101 @@
+import { motion } from "framer-motion";
 import { useState } from "react";
-import {
-  Radar, RadarChart, PolarGrid,
-  PolarAngleAxis, PolarRadiusAxis,
-} from "recharts";
 
 export default function ComparePage() {
-  const [user1, setUser1] = useState("");
-  const [user2, setUser2] = useState("");
-  const [role, setRole] = useState("Frontend Developer");
-  const [data, setData] = useState<any[]>([]);
-  const [insights, setInsights] = useState<any>(null);
+  const [name, setName] = useState("");
+  const [target, setTarget] = useState("Frontend Developer");
+  const [result, setResult] = useState("");
 
-  const handleCompare = async () => {
-    // TEMP DATA (later from backend/AI)
-    const skills = [
-      { skill: "DSA", user: 60, target: 80 },
-      { skill: "React", user: 85, target: 90 },
-      { skill: "System Design", user: 40, target: 75 },
-      { skill: "Communication", user: 70, target: 85 },
-      { skill: "Projects", user: 75, target: 90 },
-    ];
+  const handleCompare = () => {
+    if (!name) return;
 
-    setData(skills);
+    const output = `
+${name} vs ${target}
 
-    // 🤖 AI INSIGHT (mock for now)
-    setInsights({
-      betterIn: ["React", "Projects"],
-      weakerIn: ["System Design", "DSA"],
-      suggestion:
-        "Focus on DSA (Arrays, Graphs) and System Design basics. You are close to industry level.",
-    });
+Analysis:
+You are on a strong path 🚀 but to match a ${target}, you need:
+
+• More real-world projects
+• Strong DSA foundation
+• Consistency in learning
+
+Recommendation:
+Focus on building projects + practicing problems daily.
+    `;
+
+    setResult(output);
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
+    <div className="text-white flex flex-col items-center">
 
-      <h1 className="text-4xl font-bold text-center mb-10">
+      {/* TITLE */}
+      <motion.h1
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-4xl font-bold mb-6 bg-gradient-to-r from-[#00FFA3] to-[#7B6EF6] bg-clip-text text-transparent"
+      >
         ⚔️ Skill Comparison Engine
-      </h1>
+      </motion.h1>
 
-      {/* INPUTS */}
-      <div className="flex flex-wrap gap-4 justify-center mb-6">
-        <input
-          value={user1}
-          onChange={(e) => setUser1(e.target.value)}
-          placeholder="Your Name"
-          className="p-3 rounded bg-white/10 outline-none"
-        />
-        <input
-          value={user2}
-          onChange={(e) => setUser2(e.target.value)}
-          placeholder="Compare With"
-          className="p-3 rounded bg-white/10 outline-none"
-        />
+      {/* FORM CARD */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-2xl p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(123,110,246,0.1)] space-y-4"
+      >
 
-        {/* ROLE SELECT */}
-        <select
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          className="p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-        >
-          <option className="bg-gray-900 text-white">
-            Frontend Developer
-          </option>
-          <option className="bg-gray-900 text-white">
-            Backend Developer
-          </option>
-          <option className="bg-gray-900 text-white">
-            Full Stack Developer
-          </option>
-          <option className="bg-gray-900 text-white">
-            Software Engineer (FAANG)
-          </option>
-        </select>
-      </div>
+        <div className="grid md:grid-cols-3 gap-4">
 
-      {/* BUTTON */}
-      <div className="text-center mb-10">
-        <button
+          <input
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="p-3 rounded-lg bg-white/10 border border-white/10 focus:ring-2 focus:ring-[#00FFA3]"
+          />
+
+          <input
+            placeholder="Compare With"
+            className="p-3 rounded-lg bg-white/10 border border-white/10 focus:ring-2 focus:ring-[#7B6EF6]"
+          />
+
+          <select
+            value={target}
+            onChange={(e) => setTarget(e.target.value)}
+            className="p-3 rounded-lg bg-white/10 border border-white/10"
+          >
+            <option>Frontend Developer</option>
+            <option>Backend Developer</option>
+            <option>Full Stack</option>
+            <option>AI Engineer</option>
+          </select>
+        </div>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={handleCompare}
-          className="bg-yellow-400 text-black px-6 py-2 rounded-lg font-bold hover:scale-105 transition"
+          className="w-full py-3 rounded-lg font-semibold bg-gradient-to-r from-[#00FFA3] to-[#7B6EF6] text-black"
         >
-          Compare Now
-        </button>
-      </div>
+          Compare Now ⚡
+        </motion.button>
+      </motion.div>
 
-      {/* 📊 RADAR CHART */}
-      {data.length > 0 && (
-        <div className="flex justify-center mb-12">
-          <RadarChart width={400} height={400} data={data}>
-            <PolarGrid />
-            <PolarAngleAxis dataKey="skill" />
-            <PolarRadiusAxis />
-            <Radar
-              name="You"
-              dataKey="user"
-              stroke="#22c55e"
-              fill="#22c55e"
-              fillOpacity={0.4}
-            />
-            <Radar
-              name={role}
-              dataKey="target"
-              stroke="#facc15"
-              fill="#facc15"
-              fillOpacity={0.3}
-            />
-          </RadarChart>
-        </div>
-      )}
+      {/* RESULT */}
+      {result && (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-2xl mt-6 p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(0,255,163,0.1)]"
+        >
+          <h3 className="text-lg font-semibold mb-3 text-[#7B6EF6]">
+            🤖 AI Analysis
+          </h3>
 
-      {/* 🤖 AI INSIGHTS */}
-      {insights && (
-        <div className="max-w-xl mx-auto bg-white/5 p-6 rounded-xl space-y-4">
-
-          <p>
-            🔥 <b>You are strong in:</b> {insights.betterIn.join(", ")}
-          </p>
-
-          <p>
-            ⚠️ <b>Need improvement:</b> {insights.weakerIn.join(", ")}
-          </p>
-
-          <p className="text-green-400">
-            🤖 AI Suggestion: {insights.suggestion}
-          </p>
-
-        </div>
+          <pre className="whitespace-pre-wrap text-sm opacity-80">
+            {result}
+          </pre>
+        </motion.div>
       )}
     </div>
   );
