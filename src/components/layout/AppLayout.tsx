@@ -44,7 +44,7 @@ export function AppLayout({ user }: { user: any }) {
       <AppSidebar />
 
       {/* 🔥 MAIN CONTENT */}
-      <main className="flex-1 min-w-0 p-4 lg:p-8 pt-16 lg:pt-8 relative z-10 text-gray-900 dark:text-white">
+      <main className="flex-1 min-w-0 p-4 lg:p-8 pt-16 lg:pt-8 relative z-10 text-blue-900 dark:text-white">
 
         {/* 👤 TOP BAR */}
         <div className="flex justify-end items-center mb-6 gap-3">
